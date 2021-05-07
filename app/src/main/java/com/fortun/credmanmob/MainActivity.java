@@ -1,14 +1,105 @@
 package com.fortun.credmanmob;
 
+import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.fortun.credmanmob.entity.User;
+import com.fortun.credmanmob.httpClient.HTTPClientUsers;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static User user = new User();
+    EditText txtLoginUser, txtLoginPassword, txtSignUpPasswordAgain;
+    Button btnLoginSignIn, btnLoginSignUp, btnSignUp, btnSignUpCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        txtLoginUser = findViewById(R.id.txtLoginUser);
+        txtLoginPassword = findViewById(R.id.txtLoginPassword);
+        txtSignUpPasswordAgain = findViewById(R.id.txtSignUpPasswordAgain);
+        btnLoginSignIn = findViewById(R.id.btnLoginSignIn);
+        btnLoginSignUp = findViewById(R.id.btnLoginSignUp);
+        btnSignUp = findViewById(R.id.btnSignUp);
+        btnSignUpCancel = findViewById(R.id.btnSignUpCancel);
+
+        btnLoginSignIn.setOnClickListener(this);
+        btnLoginSignUp.setOnClickListener(this);
+        btnSignUp.setOnClickListener(this);
+        btnSignUpCancel.setOnClickListener(this);
+
+        txtSignUpPasswordAgain.setVisibility(View.INVISIBLE);
+        btnSignUp.setVisibility(View.INVISIBLE);
+        btnSignUpCancel.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnLoginSignIn) {
+            Toast.makeText(MainActivity.this, "Sign In", Toast.LENGTH_SHORT).show();
+            ArrayList<String> users = (ArrayList<String>) HTTPClientUsers.read("findAll", "null").clone();
+            if (users.contains(txtLoginUser.getText().toString())) {
+                HTTPClientUsers.read("findByName", txtLoginUser.getText().toString());
+                String passwordUser = String.valueOf(txtLoginPassword.getText());
+                if (passwordUser.equals(MainActivity.user.getPasswordUser())) {
+                    txtLoginUser.setText("");
+                    txtLoginPassword.setText("");
+                    txtSignUpPasswordAgain.setText("");
+                    // Change to Credential Manager Activity
+                    Toast.makeText(MainActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Wrong credentials", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(MainActivity.this, "Wrong credentials", Toast.LENGTH_SHORT).show();
+            }
+
+        } else if (v.getId() == R.id.btnLoginSignUp) {
+            Toast.makeText(MainActivity.this, "Sign Up", Toast.LENGTH_SHORT).show();
+            txtSignUpPasswordAgain.setVisibility(View.VISIBLE);
+            btnSignUp.setVisibility(View.VISIBLE);
+            btnSignUpCancel.setVisibility(View.VISIBLE);
+            btnLoginSignIn.setVisibility(View.INVISIBLE);
+            btnLoginSignUp.setVisibility(View.INVISIBLE);
+            txtLoginUser.setText("");
+            txtLoginPassword.setText("");
+            txtSignUpPasswordAgain.setText("");
+
+        } else if (v.getId() == R.id.btnSignUp) {
+            Toast.makeText(MainActivity.this, "Sign Up", Toast.LENGTH_SHORT).show();
+            txtSignUpPasswordAgain.setVisibility(View.INVISIBLE);
+            btnSignUp.setVisibility(View.INVISIBLE);
+            btnSignUpCancel.setVisibility(View.INVISIBLE);
+            btnLoginSignIn.setVisibility(View.VISIBLE);
+            btnLoginSignUp.setVisibility(View.VISIBLE);
+            txtLoginUser.setText("");
+            txtLoginPassword.setText("");
+            txtSignUpPasswordAgain.setText("");
+
+        } else if (v.getId() == R.id.btnSignUpCancel) {
+            Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+            txtSignUpPasswordAgain.setVisibility(View.INVISIBLE);
+            btnSignUp.setVisibility(View.INVISIBLE);
+            btnSignUpCancel.setVisibility(View.INVISIBLE);
+            btnLoginSignIn.setVisibility(View.VISIBLE);
+            btnLoginSignUp.setVisibility(View.VISIBLE);
+            txtLoginUser.setText("");
+            txtLoginPassword.setText("");
+            txtSignUpPasswordAgain.setText("");
+
+        }
     }
 }

@@ -4,4 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnLoginSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/btnLoginSignIn"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLoginSignUp"
+        app:layout_constraintEnd_toStartOf="@+id/btnLoginSignUp" />
+
+    <Button
+        android:id="@+id/btnLoginSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/btnLoginSignUp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/btnSignUp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSignUpCancel"
+        app:layout_constraintEnd_toStartOf="@+id/btnSignUpCancel" />
+
+    <Button
+        android:id="@+id/btnSignUpCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="96dp"
+        android:text="@string/btnSignUpCancel"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoginSignUp"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/txtLoginUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:autofillHints="User"
+        android:ems="10"
+        android:hint="@string/txtLoginUser"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtLoginPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:autofillHints="Password"
+        android:ems="10"
+        android:hint="@string/txtLoginPassword"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginUser" />
+
+    <EditText
+        android:id="@+id/txtSignUpPasswordAgain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:autofillHints="Password"
+        android:ems="10"
+        android:hint="@string/txtLoginPassword"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

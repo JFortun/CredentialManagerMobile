@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CredentialManagerMobile</string>
+    <string name="txtLoginUser">Username</string>
+    <string name="txtLoginPassword">Password</string>
+    <string name="btnLoginSignIn">Sign In</string>
+    <string name="btnLoginSignUp">Sign Up</string>
+    <string name="btnSignUp">Sign Up</string>
+    <string name="btnSignUpCancel">Cancel</string>
+
 </resources>
