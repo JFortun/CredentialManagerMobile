@@ -1,5 +1,6 @@
 package com.fortun.credmanmob;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnLoginSignIn) {
-            Toast.makeText(MainActivity.this, "Sign In", Toast.LENGTH_SHORT).show();
             ArrayList<String> users = (ArrayList<String>) HTTPClientUsers.read("findAll", "null").clone();
             if (users.contains(txtLoginUser.getText().toString())) {
                 HTTPClientUsers.read("findByName", txtLoginUser.getText().toString());
@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     txtLoginUser.setText("");
                     txtLoginPassword.setText("");
                     txtSignUpPasswordAgain.setText("");
-                    // Change to Credential Manager Activity
+                    Intent CredentialManager = new Intent(v.getContext(), CredentialManager.class);
+                    startActivity(CredentialManager);
                     Toast.makeText(MainActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "Wrong credentials", Toast.LENGTH_SHORT).show();
@@ -68,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         } else if (v.getId() == R.id.btnLoginSignUp) {
-            Toast.makeText(MainActivity.this, "Sign Up", Toast.LENGTH_SHORT).show();
             txtSignUpPasswordAgain.setVisibility(View.VISIBLE);
             btnSignUp.setVisibility(View.VISIBLE);
             btnSignUpCancel.setVisibility(View.VISIBLE);
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         } else if (v.getId() == R.id.btnSignUpCancel) {
-            Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
             txtSignUpPasswordAgain.setVisibility(View.INVISIBLE);
             btnSignUp.setVisibility(View.INVISIBLE);
             btnSignUpCancel.setVisibility(View.INVISIBLE);

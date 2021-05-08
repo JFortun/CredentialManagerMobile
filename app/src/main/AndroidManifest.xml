@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fortun.credmanmob">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CredentialManagerMobile"
         android:usesCleartextTraffic="true">
+        <activity android:name=".CredentialManager"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
