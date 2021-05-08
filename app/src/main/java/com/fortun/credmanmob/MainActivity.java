@@ -79,15 +79,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtSignUpPasswordAgain.setText("");
 
         } else if (v.getId() == R.id.btnSignUp) {
-            Toast.makeText(MainActivity.this, "Sign Up", Toast.LENGTH_SHORT).show();
-            txtSignUpPasswordAgain.setVisibility(View.INVISIBLE);
-            btnSignUp.setVisibility(View.INVISIBLE);
-            btnSignUpCancel.setVisibility(View.INVISIBLE);
-            btnLoginSignIn.setVisibility(View.VISIBLE);
-            btnLoginSignUp.setVisibility(View.VISIBLE);
-            txtLoginUser.setText("");
-            txtLoginPassword.setText("");
-            txtSignUpPasswordAgain.setText("");
+            if ((txtLoginUser.getText().length() > 0) && txtLoginPassword.getText().toString().equals(txtSignUpPasswordAgain.getText().toString())) {
+                HTTPClientUsers.create(txtLoginUser.getText().toString(), txtLoginPassword.getText().toString());
+                Toast.makeText(MainActivity.this, "User signed up", Toast.LENGTH_SHORT).show();
+                txtSignUpPasswordAgain.setVisibility(View.INVISIBLE);
+                btnSignUp.setVisibility(View.INVISIBLE);
+                btnSignUpCancel.setVisibility(View.INVISIBLE);
+                btnLoginSignIn.setVisibility(View.VISIBLE);
+                btnLoginSignUp.setVisibility(View.VISIBLE);
+                txtLoginUser.setText("");
+                txtLoginPassword.setText("");
+                txtSignUpPasswordAgain.setText("");
+            } else {
+                Toast.makeText(MainActivity.this, "You have not entered the name or the passwords do not match", Toast.LENGTH_SHORT).show();
+            }
 
         } else if (v.getId() == R.id.btnSignUpCancel) {
             Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
