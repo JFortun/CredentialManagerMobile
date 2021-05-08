@@ -6,8 +6,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.fortun.credmanmob.httpClient.HTTPClientUsers;
 
 import java.util.ArrayList;
 
@@ -78,14 +81,21 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
             btnUserManagerCancel.setVisibility(View.VISIBLE);
 
         } else if (v.getId() == R.id.btnUserManagerUpdate) {
-            btnSignOut.setVisibility(View.VISIBLE);
-            btnManageUser.setVisibility(View.VISIBLE);
-            txtUserManagerUser.setVisibility(View.INVISIBLE);
-            txtUserManagerPassword.setVisibility(View.INVISIBLE);
-            txtUserManagerPasswordAgain.setVisibility(View.INVISIBLE);
-            btnUserManagerUpdate.setVisibility(View.INVISIBLE);
-            btnUserManagerDelete.setVisibility(View.INVISIBLE);
-            btnUserManagerCancel.setVisibility(View.INVISIBLE);
+            if ((txtUserManagerUser.getText().length() > 0) && txtUserManagerPassword.getText().toString().equals(txtUserManagerPasswordAgain.getText().toString())) {
+                HTTPClientUsers.update(MainActivity.user.getIdUser().intValue(), txtUserManagerUser.getText().toString(), txtUserManagerPassword.getText().toString());
+                Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
+                HTTPClientUsers.read("findByName", txtUserManagerUser.getText().toString());
+                btnSignOut.setVisibility(View.VISIBLE);
+                btnManageUser.setVisibility(View.VISIBLE);
+                txtUserManagerUser.setVisibility(View.INVISIBLE);
+                txtUserManagerPassword.setVisibility(View.INVISIBLE);
+                txtUserManagerPasswordAgain.setVisibility(View.INVISIBLE);
+                btnUserManagerUpdate.setVisibility(View.INVISIBLE);
+                btnUserManagerDelete.setVisibility(View.INVISIBLE);
+                btnUserManagerCancel.setVisibility(View.INVISIBLE);
+            } else {
+                Toast.makeText(this, "You have not entered the name or the passwords do not match", Toast.LENGTH_SHORT).show();
+            }
 
         } else if (v.getId() == R.id.btnUserManagerDelete) {
             finish();
