@@ -98,6 +98,8 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
             }
 
         } else if (v.getId() == R.id.btnUserManagerDelete) {
+            HTTPClientUsers.delete(MainActivity.user.getIdUser().intValue());
+            Toast.makeText(this, "User deleted", Toast.LENGTH_SHORT).show();
             finish();
 
         } else if (v.getId() == R.id.btnUserManagerCancel) {
