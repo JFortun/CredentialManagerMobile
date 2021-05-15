@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">CredentialManagerMobile</string>
-    <string name="txtUser">Username</string>
+    <string name="txtName">Name</string>
+    <string name="txtUser">User</string>
     <string name="txtPassword">Password</string>
     <string name="btnSignIn">Sign In</string>
     <string name="btnSignUp">Sign Up</string>
     <string name="btnCancel">Cancel</string>
     <string name="btnDelete">Delete</string>
     <string name="btnUpdate">Update</string>
+    <string name="btnCreate">Create</string>
+    <string name="btnNew">New</string>
     <string name="btnSignOut">Sign Out</string>
     <string name="btnManageUser">Manage User</string>
 
