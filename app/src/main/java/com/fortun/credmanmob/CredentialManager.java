@@ -3,6 +3,8 @@ package com.fortun.credmanmob;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 
 public class CredentialManager extends AppCompatActivity implements View.OnClickListener {
 
+    final Handler handler = new Handler(Looper.getMainLooper());
     ListView credentialsList;
     ArrayList<String> credentials;
     ArrayAdapter<String> adapter;
@@ -124,6 +127,17 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
                 return true;
             }
         });
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+                credentials.clear();
+                credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
+                adapter.notifyDataSetChanged();
+
+                handler.postDelayed(this, 5000);
+            }
+        }, 5000);
 
     }
 
