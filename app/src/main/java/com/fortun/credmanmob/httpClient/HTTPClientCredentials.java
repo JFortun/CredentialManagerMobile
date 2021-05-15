@@ -30,7 +30,7 @@ public class HTTPClientCredentials {
 
     public static void create(String nameCredential, String userCredential, String passwordCredential, String idUserFK) {
         try {
-            URL url = new URL("http://localhost:8080/api/credentials");
+            URL url = new URL("http://192.168.1.35:8080/api/credentials");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             HashMap<String, String> postDataParams = new HashMap<>();

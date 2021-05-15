@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class CredentialManager extends AppCompatActivity implements View.OnClickListener {
 
     ListView credentialsList;
-    ArrayList<String> credentials = new ArrayList<>();
+    ArrayList<String> credentials;
     ArrayAdapter<String> adapter;
     EditText txtUserManagerUser, txtUserManagerPassword, txtUserManagerPasswordAgain, txtCredentialManagerName, txtCredentialManagerUser, txtCredentialManagerPassword;
     Button btnSignOut, btnManageUser, btnUserManagerUpdate, btnUserManagerDelete, btnUserManagerCancel, btnCredentialManagerNew, btnCredentialManagerCreate, btnCredentialManagerUpdate, btnCredentialManagerCancel;
@@ -89,6 +89,7 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
                 txtCredentialManagerPassword.setVisibility(View.VISIBLE);
 
                 String[] credentialSplit = credentialsList.getItemAtPosition(position).toString().split("     ");
+                MainActivity.credential.setIdCredential(Long.valueOf(credentialSplit[0]));
                 txtCredentialManagerName.setText(credentialSplit[1]);
                 txtCredentialManagerUser.setText(credentialSplit[2]);
                 txtCredentialManagerPassword.setText(credentialSplit[3]);
@@ -103,8 +104,13 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String[] credentialSplit = credentialsList.getItemAtPosition(position).toString().split("     ");
-                                Toast.makeText(getApplicationContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                                MainActivity.credential.setIdCredential(Long.valueOf(credentialSplit[0]));
+                                HTTPClientCredentials.delete(MainActivity.credential.getIdCredential().intValue());
+                                Toast.makeText(getApplicationContext(), "Credential deleted", Toast.LENGTH_SHORT).show();
 
+                                credentials.clear();
+                                credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
+                                adapter.notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -175,7 +181,9 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
             txtCredentialManagerName.setVisibility(View.VISIBLE);
             txtCredentialManagerUser.setVisibility(View.VISIBLE);
             txtCredentialManagerPassword.setVisibility(View.VISIBLE);
+
         } else if (v.getId() == R.id.btnCredentialManagerCreate) {
+            HTTPClientCredentials.create(txtCredentialManagerName.getText().toString(), txtCredentialManagerUser.getText().toString(), txtCredentialManagerPassword.getText().toString(), String.valueOf(MainActivity.user.getIdUser()));
             Toast.makeText(this, "Credential created", Toast.LENGTH_SHORT).show();
             btnCredentialManagerNew.setVisibility(View.VISIBLE);
             btnCredentialManagerCreate.setVisibility(View.INVISIBLE);
@@ -184,23 +192,31 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
             txtCredentialManagerName.setVisibility(View.INVISIBLE);
             txtCredentialManagerUser.setVisibility(View.INVISIBLE);
             txtCredentialManagerPassword.setVisibility(View.INVISIBLE);
+
+            credentials.clear();
+            credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
+            adapter.notifyDataSetChanged();
+
         } else if (v.getId() == R.id.btnCredentialManagerUpdate) {
             Toast.makeText(this, "Credential updated", Toast.LENGTH_SHORT).show();
+            HTTPClientCredentials.update(MainActivity.credential.getIdCredential().intValue(), txtCredentialManagerName.getText().toString(), txtCredentialManagerUser.getText().toString(), txtCredentialManagerPassword.getText().toString(), String.valueOf(MainActivity.user.getIdUser()));
             btnCredentialManagerNew.setVisibility(View.VISIBLE);
             btnCredentialManagerCreate.setVisibility(View.INVISIBLE);
             btnCredentialManagerUpdate.setVisibility(View.INVISIBLE);
             btnCredentialManagerCancel.setVisibility(View.INVISIBLE);
             txtCredentialManagerName.setVisibility(View.INVISIBLE);
             txtCredentialManagerUser.setVisibility(View.INVISIBLE);
-            txtCredentialManagerPassword.setVisibility(View.INVISIBLE);
-        } else if (v.getId() == R.id.btnCredentialManagerCancel) {
-            btnCredentialManagerNew.setVisibility(View.VISIBLE);
             btnCredentialManagerCreate.setVisibility(View.INVISIBLE);
             btnCredentialManagerUpdate.setVisibility(View.INVISIBLE);
             btnCredentialManagerCancel.setVisibility(View.INVISIBLE);
             txtCredentialManagerName.setVisibility(View.INVISIBLE);
             txtCredentialManagerUser.setVisibility(View.INVISIBLE);
             txtCredentialManagerPassword.setVisibility(View.INVISIBLE);
+
+            credentials.clear();
+            credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
+            adapter.notifyDataSetChanged();
+
         }
     }
 }
