@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fortun.credmanmob.entity.Credential;
 import com.fortun.credmanmob.entity.User;
 import com.fortun.credmanmob.httpClient.HTTPClientUsers;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static User user = new User();
+    public static Credential credential =  new Credential();
     EditText txtLoginUser, txtLoginPassword, txtSignUpPasswordAgain;
     Button btnLoginSignIn, btnLoginSignUp, btnSignUp, btnSignUpCancel;
 
