@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (users.contains(txtLoginUser.getText().toString())) {
                 HTTPClientUsers.read("findByName", txtLoginUser.getText().toString());
                 String passwordUser = String.valueOf(txtLoginPassword.getText());
-                if (passwordUser.equals(MainActivity.user.getPasswordUser())) {
+                if (HTTPClientUsers.encrypt(passwordUser).equals(MainActivity.user.getPasswordUser())) {
                     txtLoginUser.setText("");
                     txtLoginPassword.setText("");
                     txtSignUpPasswordAgain.setText("");

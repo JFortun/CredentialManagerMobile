@@ -158,7 +158,7 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
 
         } else if (v.getId() == R.id.btnUserManagerUpdate) {
             if ((txtUserManagerUser.getText().length() > 0) && txtUserManagerPassword.getText().toString().equals(txtUserManagerPasswordAgain.getText().toString())) {
-                HTTPClientUsers.update(MainActivity.user.getIdUser().intValue(), txtUserManagerUser.getText().toString(), txtUserManagerPassword.getText().toString());
+                HTTPClientUsers.update(MainActivity.user.getIdUser().intValue(), txtUserManagerUser.getText().toString(), HTTPClientUsers.encrypt(txtUserManagerPassword.getText().toString()));
                 Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
                 HTTPClientUsers.read("findByName", txtUserManagerUser.getText().toString());
                 btnSignOut.setVisibility(View.VISIBLE);

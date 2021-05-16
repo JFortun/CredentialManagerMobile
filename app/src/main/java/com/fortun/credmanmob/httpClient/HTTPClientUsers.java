@@ -17,6 +17,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +39,7 @@ public class HTTPClientUsers {
             connection.setRequestMethod("POST");
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("nameUser", nameUser);
-            postDataParams.put("passwordUser", passwordUser);
+            postDataParams.put("passwordUser", encrypt(passwordUser));
             connection.setDoInput(true);
             connection.setDoOutput(true);
             OutputStream os = connection.getOutputStream();
@@ -137,7 +139,7 @@ public class HTTPClientUsers {
 
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("nameUser", nameUser);
-            postDataParams.put("passwordUser", passwordUser);
+            postDataParams.put("passwordUser", encrypt(passwordUser));
 
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -190,5 +192,21 @@ public class HTTPClientUsers {
             result.append(URLEncoder.encode(entry.getValue(), String.valueOf(StandardCharsets.UTF_8)));
         }
         return result.toString();
+    }
+
+    public static String encrypt(String data) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(data.getBytes());
+            byte[] byteData = md.digest();
+            for (byte byteDatum : byteData) {
+                sb.append(Integer.toString((byteDatum & 0xff) + 0x100, 16).substring(1));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return sb.toString();
     }
 }
