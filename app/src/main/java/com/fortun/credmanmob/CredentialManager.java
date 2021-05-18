@@ -74,12 +74,11 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
         btnCredentialManagerUpdate.setVisibility(View.INVISIBLE);
         btnCredentialManagerCancel.setVisibility(View.INVISIBLE);
 
-        credentials = HTTPClientCredentials.read("findAll", "null");
+        credentials = HTTPClientCredentials.read("findByUser", String.valueOf(MainActivity.user.getIdUser()));
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, credentials);
 
         credentialsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
         credentialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -111,9 +110,9 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
                                 HTTPClientCredentials.delete(MainActivity.credential.getIdCredential().intValue());
                                 Toast.makeText(getApplicationContext(), "Credential deleted", Toast.LENGTH_SHORT).show();
 
-                                credentials.clear();
-                                credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
-                                adapter.notifyDataSetChanged();
+                                adapter.clear();
+                                credentials = HTTPClientCredentials.read("findByUser", String.valueOf(MainActivity.user.getIdUser()));
+                                adapter.addAll(credentials);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -131,9 +130,9 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
         handler.postDelayed(new Runnable() {
             public void run() {
 
-                credentials.clear();
-                credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
-                adapter.notifyDataSetChanged();
+                adapter.clear();
+                credentials = HTTPClientCredentials.read("findByUser", String.valueOf(MainActivity.user.getIdUser()));
+                adapter.addAll(credentials);
 
                 handler.postDelayed(this, 5000);
             }
@@ -207,9 +206,9 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
             txtCredentialManagerUser.setVisibility(View.INVISIBLE);
             txtCredentialManagerPassword.setVisibility(View.INVISIBLE);
 
-            credentials.clear();
-            credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
-            adapter.notifyDataSetChanged();
+            adapter.clear();
+            credentials = HTTPClientCredentials.read("findByUser", String.valueOf(MainActivity.user.getIdUser()));
+            adapter.addAll(credentials);
 
         } else if (v.getId() == R.id.btnCredentialManagerUpdate) {
             Toast.makeText(this, "Credential updated", Toast.LENGTH_SHORT).show();
@@ -227,9 +226,9 @@ public class CredentialManager extends AppCompatActivity implements View.OnClick
             txtCredentialManagerUser.setVisibility(View.INVISIBLE);
             txtCredentialManagerPassword.setVisibility(View.INVISIBLE);
 
-            credentials.clear();
-            credentials.addAll(HTTPClientCredentials.read("findAll", "null"));
-            adapter.notifyDataSetChanged();
+            adapter.clear();
+            credentials = HTTPClientCredentials.read("findByUser", String.valueOf(MainActivity.user.getIdUser()));
+            adapter.addAll(credentials);
 
         }
     }
