@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CredentialManagerMobile</string>
+    <string name="app_name">Credential Manager</string>
     <string name="txtName">Name</string>
     <string name="txtUser">User</string>
     <string name="txtPassword">Password</string>
